@@ -1,0 +1,16 @@
+server:
+ port: 8087
+spring:
+ data:
+  mongodb:
+   uri: mongodb://localhost:27017/taskService
+ application:
+  name: task-profile-service
+feign:
+ client:
+  config:
+   stores:
+    connectTimeout: 5000
+    readTimeout: 5000
+    loggerLevel: full
+    requestInterceptors:

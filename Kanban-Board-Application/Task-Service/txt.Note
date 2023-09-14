@@ -1,0 +1,39 @@
+space->task (create list)  = search login user then give task
+
+
+
+ public void changeCategory(Integer id) {
+        String category = (String) entityManager.createQuery("SELECT t.category from Task t WHERE t.id = :id")
+                .setParameter("id", id)
+                .getSingleResult();
+        EntityTransaction entityTransaction = entityManager.getTransaction();
+        int changedTasks;
+        switch (category) {
+            case "todo":
+                entityTransaction = entityManager.getTransaction();
+                entityTransaction.begin();
+                changedTasks = entityManager.createQuery("UPDATE Task t SET t.category = 'doing' WHERE t.id = :id")
+                        .setParameter("id", id)
+                        .executeUpdate();
+                if (changedTasks == 1)
+                    entityTransaction.commit();
+                return;
+            case "doing":
+                entityTransaction = entityManager.getTransaction();
+                entityTransaction.begin();
+                changedTasks = entityManager.createQuery("UPDATE Task t SET t.category = 'done' WHERE t.id = :id")
+                        .setParameter("id", id)
+                        .executeUpdate();
+                if (changedTasks == 1)
+                    entityTransaction.commit();
+                return;
+            case "done":
+                entityTransaction = entityManager.getTransaction();
+                entityTransaction.begin();
+                changedTasks = entityManager.createQuery("DELETE FROM Task t WHERE t.id = :id")
+                        .setParameter("id", id)
+                        .executeUpdate();
+                if (changedTasks == 1)
+                    entityTransaction.commit();
+        }
+    }

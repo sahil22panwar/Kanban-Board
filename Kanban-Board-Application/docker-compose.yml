@@ -1,0 +1,89 @@
+version: "3.5"
+services:
+  mysqlservice:
+    image: mysql:5.5
+    ports:
+      - 3306:3306
+    container_name: mysql-container
+    network_mode: host
+    hostname: localhost
+    environment:
+      MYSQL_ROOT_PASSWORD: Password@123
+      MYSQL_USERNAME: root
+      MYSQL_PASSWORD: Password@123
+      MYSQL_ALLOW_EMPTY_PASSWORD: "yes"
+
+  mongodbservice:
+    image: mongo:latest
+    container_name: mongo-container
+    network_mode: host
+    hostname: localhost
+    ports:
+      - 27017:27017
+
+  user-authentication-service:
+    container_name: user-authentication-project
+    build: user-authentication-service/
+    hostname: localhost
+    network_mode: host
+    ports:
+      - 8081:8082
+    depends_on:
+      - mysqlservice
+      - eurekaServer
+      - cloudapiservice
+    restart: always
+
+  task-profile-service:
+    container_name: task-profile-service
+    build: task-profile-service/
+    hostname: localhost
+    network_mode: host
+    ports:
+      - 8087:8087
+    depends_on:
+      - mongodbservice
+      - eureka-service
+      - KanbanNotification
+      - task-profile-service
+      - user-authentication-project
+    restart: always
+
+  KanbanNotification:
+    container_name: KanbanNotification
+    build: KanbanNotification/
+    hostname: localhost
+    network_mode: host
+    ports:
+      - 8088:8088
+    depends_on:
+      - mongodbservice
+      - eureka-service
+      - KanbanNotification
+    restart: always
+
+  api-gateway-service:
+    image: api-gateway-service
+    build: ApiGateWay/
+    restart: always
+    network_mode: host
+    #hostname: localhost
+    ports:
+      - 9000:9000
+    environment:
+      API_GATEWAY_PORT: 9000
+      EUREKA_SERVER_IP: localhost
+      EUREKA_SERVER_PORT: 8761
+    depends_on:
+      - eurekaServer
+
+  eureka-service:
+    image: eureka-service
+    build: EurekaServer/
+    restart: always
+    network_mode: host
+    #hostname: localhost
+    environment:
+      EUREKA_SERVER_PORT: 8761
+    ports:
+      - 8761:8761
