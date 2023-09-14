@@ -1,0 +1,17 @@
+server:
+ port: 8088
+spring:
+ data:
+  mongodb:
+   uri: mongodb://localhost:27017/KanbanNotification
+ application:
+  name: notification-service
+erureka:
+ cleint:
+  registerWithEureka: true
+  fetchRegistry: true
+  serviceUrl:
+   defaultZone: http://localhost:8761/eureka
+ instance:
+  hostname: localhost
+
