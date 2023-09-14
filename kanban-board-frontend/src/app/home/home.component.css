@@ -1,0 +1,217 @@
+
+mat-drawer-container
+{ flex: 1 1 auto;
+  background-color: (rgb(107, 107, 206));
+  overflow: hidden !important;
+}
+
+mat-drawer{
+  width: 10rem;
+  /* background: #f2bdeb; */
+
+}
+h1{
+  text-align: center;
+
+}
+mat-list{
+  padding: 5px,5px;
+}
+.list-group-item:hover{
+
+  /* background-color:rgb(101, 157, 181); */
+  color: rgba(246, 235, 246, 0.964);
+}
+mat-drawer-content{
+  background-color: rgb(196, 179, 158);
+  background: linear-gradient(45deg, #ffffff,#99dffab8);
+
+}
+
+mat-accordion{
+  background-color: #bdf2e7;
+
+}
+
+.example-container{
+  width: 100%;
+  height: 100%;
+
+
+}
+.mat-drawer{
+  width: 20%;
+}
+  .mat-expansion-panel  {
+  width: 100%;
+  height: 100%;
+ opacity: initial;
+}
+.mat-accordion{
+  width: auto;
+  float: left;
+
+
+}
+
+#btn1{
+  margin-left: 20px;
+  width: 100px;
+
+}
+
+#btn2{
+  margin-left: 5px;
+  width: 120px;
+}
+
+.Mat{
+  /* background: linear-gradient(45deg,#14e5b1eb,  #2ad7ac,  #b0b1b8, #42e2c0, #ecdedeb8, #14e5b1eb); */
+
+}
+
+.image {
+  border: 1px solid rgb(238, 238, 238);
+  border-radius: 4px;
+  padding: 5px;
+  width: 1220px;
+  height: 687px;
+  margin-top: -13px;
+}
+
+
+#button {
+
+  min-width: 20px;
+  min-height: 5px;
+  font-family: 'Nunito', sans-serif;
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 1.3px;
+  font-weight: 700;
+  color: #f6f6f8;
+  background: #1e1f1f;
+  border: none;
+  transition: all 0.3s ease-in-out 0s;
+  cursor: pointer;
+  outline: none;
+  position: relative;
+  padding: 5px;
+  border-radius: 100px;
+  padding-left: 2px;
+  }
+
+button::before {
+
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  opacity: 0;
+  transition: all .3s ease-in-out 0s;
+}
+
+#button:hover, .button:focus {
+  color: #313133;
+  transform: translateY(-6px);
+}
+
+button:hover::before, button:focus::before {
+  opacity: 1;
+}
+
+
+
+button:hover::after, button:focus::after {
+  animation: none;
+  display: none;
+}
+
+
+
+
+.sidebar-open{
+  background-color: #080808;
+  border: none;
+  color: white;
+  padding: 10px 20px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 4px 2px;
+  transition-duration: 0.4s;
+  cursor: pointer;
+}
+
+.btnsidebar{
+  background-color: black;
+  color: white;
+  border: 1px solid #555555;
+  border-radius: 10px;
+}
+
+.btnsidebar:hover{
+  box-shadow: 2px 2px 5px gray;
+}
+
+.sidebar-slider {
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  background-color: black;
+  transform: translateX(-100%);
+  transition: ease-in-out 300ms transform;
+  width: 300px;
+}
+
+.sidebar-slider.sidebar-slide-in {
+  transform: translateX(0%);
+  transition: ease-in-out 600ms transform;
+}
+
+.sidebar-close {
+  position: fixed;
+  top: 0;
+  right: 0;
+  color: black;
+  cursor: pointer;
+  background-color: white;
+  border: none;
+  margin: 7px;
+  border-radius: 3px;
+  padding-left: 10px;
+  padding-right: 10px;
+  font-size: 21px;
+  font-weight: 400;
+}
+
+.sidebar-content {
+  display: flex;
+  flex-direction: column;
+  color: white;
+  font-size: 16px;
+  padding: 10px;
+  height: 100%;
+  margin-top:66px;
+
+}
+
+.set-align{
+  text-align: center;
+}
+
+.set-sidebar-text{
+  padding: 11px;
+}
+
+.set-sidebar-text:hover{
+  color: black;
+  border-left: 10px solid rgb(3, 172, 250);
+  cursor: pointer;
+}
+
+.navbar-brand{
+  margin-left: 500px;
+}

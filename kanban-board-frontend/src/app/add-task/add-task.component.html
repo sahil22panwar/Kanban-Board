@@ -1,0 +1,68 @@
+<h1 mat-dialog-title>New task</h1>
+
+<form [formGroup]="addTask" style=" background: linear-gradient(45deg, #ffffff,#99dffab8);">
+  <mat-form-field appearance="outline" [style.width.%]="50">
+    <mat-label>Taskname</mat-label>
+    <input matInput formControlName="taskName">
+  </mat-form-field>
+
+  <mat-form-field appearance="outline" [style.width.%]="50">
+     <mat-label>Assignees</mat-label>
+    <input matInput formControlName="email" [matMenuTriggerFor]="matmenu" [(ngModel)]="selectedEmail">
+  </mat-form-field>
+  <br>
+
+  <mat-form-field appearance="outline" [style.width.%]="100">
+    <mat-menu #matmenu="matMenu">
+      <button mat-menu-item *ngFor="let item of users" (click)="addEmail(item.email)">
+        <span>{{item.email}}</span>
+      </button>
+    </mat-menu>
+     <mat-label>Task Description</mat-label>
+    <textarea matInput formControlName="taskDescription"></textarea>
+  </mat-form-field>
+  <br>
+
+  <mat-form-field appearance="outline" [style.width.%]="50">
+   <mat-label>TaskStatus</mat-label>
+    <mat-select [(ngModel)]="selectedTaskStatus" name="taskStatus" formControlName="taskStatus">
+      <mat-option *ngFor="let status of taskStatus" [value]="status.value">
+        {{status.viewValue}}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <mat-form-field appearance="outline" [style.width.%]="50">
+    <mat-label>Priority</mat-label>
+     <mat-select [(ngModel)]="selectedPriority" name="priority" formControlName="priority">
+       <mat-option *ngFor="let p of priority" [value]="p.value">
+         {{p.viewValue}}
+       </mat-option>
+     </mat-select>
+   </mat-form-field>
+  <br>
+
+  <mat-form-field appearance="outline" [style.width.%]="50">
+    <mat-label>Choose set date</mat-label>
+    <input matInput [matDatepicker]="picker1"  [min]="tdate"  formControlName="startDate">
+    <mat-hint>MM/DD/YYYY</mat-hint>
+    <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+    <mat-datepicker #picker1></mat-datepicker>
+  </mat-form-field>
+
+  <mat-form-field appearance="outline" [style.width.%]="50">
+    <mat-label>Choose due date</mat-label>
+    <input matInput [matDatepicker]="picker" [min]="tdate" formControlName="dueDate">
+    <mat-hint>MM/DD/YYYY</mat-hint>
+    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+    <mat-datepicker #picker></mat-datepicker>
+  </mat-form-field>
+
+  <div mat-dialog-actions style="float: right;">
+    <button mat-button color="primary" mat-dialog-close cdkFocusInitial (click)="createTask()"  style="margin-left: 30px;">Save</button>
+    <button mat-button mat-dialog-close style="margin-left: 20px;"  style="background: linear-gradient(45deg, #ffffff,#99dffab8);">Close</button>
+  </div>
+
+</form>
+
+

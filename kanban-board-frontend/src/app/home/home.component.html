@@ -1,0 +1,108 @@
+<mat-drawer-container class="example-container">
+  <mat-drawer mode="side" opened style="width: 300px;" >
+    <!-- <img src="./assets/kanbanlogo.jpg" style="width: 250px; height: 60px;"> -->
+    <h1 style="margin-left: 10px;margin-top: 5%;font-family: 'Oleo Script Swash Caps', cursive;"><b>KANBAN BOARD</b></h1>
+    <ul class="list-group">
+
+      <li class="list-group-item list-group-item-dark" routerLink="notify"
+        style="background-color: white;">
+        Home
+      </li>
+      <li class="list-group-item list-group-item-dark" style="background-color: white;">
+        <div>
+          <mat-accordion style="width: 95%;">
+            <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false"
+              >
+              <mat-expansion-panel-header >
+                <mat-panel-title>
+                  Space
+                </mat-panel-title>
+
+              </mat-expansion-panel-header>
+
+              <mat-expansion-panel (opened)="panelOpenState1 = true" (closed)="panelOpenState1 = false">
+                <mat-expansion-panel-header>
+                  <mat-panel-title>
+                    Add Space
+                  </mat-panel-title>
+                </mat-expansion-panel-header>
+                <p > <input type="text"
+                    placeholder="Create a space" [(ngModel)]="spaceName" style="border: 2px;  margin: 2px;" />
+                  <br><br><button [matMenuTriggerFor]="matmenu" id="button">Add member</button>&nbsp;
+                  <button (click)="spaces(spaceName)" id="button">Save</button>
+                </p>
+
+                <mat-chip-list aria-label="Member selection">
+                  <mat-chip *ngFor="let se of selectedEmails">{{se}}</mat-chip>
+                </mat-chip-list>
+
+              </mat-expansion-panel>
+              <mat-expansion-panel (opened)="panelOpenState1 = true" (closed)="panelOpenState1 = false" style="margin-top: 10px;">
+                <mat-expansion-panel-header style="width: 100%;">
+                  <mat-panel-title>
+                    My spaces
+                  </mat-panel-title>
+                </mat-expansion-panel-header>
+                <br>
+                <br>
+                  <mat-card *ngFor="let space of myspaces" style="width: 100%; padding: 0;margin: 0;">
+                   <mat-card-subtitle (click)="showTasks(space)" style="font-size:larger;">{{space.spaceName}}
+
+                    <a mat-raised-button matTooltip="Delete" (click)="deleteSpaceById(space.spaceName)"
+                    style="color: red;float: right; "><mat-icon>delete</mat-icon></a>
+                    </mat-card-subtitle>
+
+                    <mat-card-subtitle>Members <mat-icon matTooltip="View Member" [matMenuTriggerFor]="matmenu1"
+                        style="float: right;">keyboard_arrow_right</mat-icon>
+                    </mat-card-subtitle>
+                    <mat-menu #matmenu1="matMenu">
+                      <button mat-menu-item *ngFor="let item of space.email">
+                        <span>{{item}}</span>
+                      </button>
+                    </mat-menu>
+                  </mat-card>
+              </mat-expansion-panel>
+            </mat-expansion-panel>
+          </mat-accordion>
+        </div>
+        <mat-menu #matmenu="matMenu">
+          <button mat-menu-item *ngFor="let item of users" (click)="addEmail(item.email)">
+            <span>{{item.email}}</span>
+          </button>
+        </mat-menu>
+      </li>
+
+
+    </ul>
+  </mat-drawer>
+
+
+  <mat-drawer-content>
+
+    <p style="width: 100%;">
+      <mat-toolbar class="Mat " >
+        <span class="example-spacer"></span>
+
+        <!-- <h3 style="text-transform: capitalize;">{{name}}</h3>&nbsp;<a mat-icon-button [matMenuTriggerFor]="menu" style="color: black;" matTooltip="Manage Profile" aria-label="Button that displays a tooltip when focused or hovered over"><mat-icon>person</mat-icon></a>      -->
+
+
+        <h3 style="text-transform: capitalize;margin-left: 75%;">Hi {{name}} </h3>
+
+        <!-- <h3 style="text-transform:uppercase;margin-left: 1050px;">Hi {{name}} </h3> -->
+
+     <button mat-menu-item (click)="openProfile()" id="btn1" >
+          <mat-icon style="width: 10px;font-size: 19px;" matTooltip="Manage Profile"
+            aria-label="Button that displays a tooltip when focused or hovered over">account_circle</mat-icon>
+        </button>
+
+        <button mat-menu-item (click)="logOut()" id="btn2">
+          <mat-icon matTooltip="LOG OUT" aria-label="Button that displays a tooltip when focused or hovered over">logout
+          </mat-icon>
+        </button>
+
+      </mat-toolbar>
+    </p>
+
+    <router-outlet></router-outlet>
+  </mat-drawer-content>
+</mat-drawer-container>

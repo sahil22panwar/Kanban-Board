@@ -1,0 +1,308 @@
+<nav class="navbar navbar-expand-lg "
+  style=" background: linear-gradient(45deg, #ffffff,#99dffab8);;margin-top: -10px;">
+  <div class="container-fluid">
+    <a class="navbar-brand mb-0 h1"></a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+      aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+      <ul class="navbar-nav">
+        <div class="container">
+          <div class="row">
+            <div class="col">
+              <button style="cursor:pointer" (click)="goToListView()" id="list">
+                <div class="icon-text">
+                  <mat-icon >list</mat-icon>
+                  <span>List</span>
+               </div>
+                <!-- <mat-icon style="vertical-align: middle;">list</mat-icon><mat-label>List</mat-label> -->
+              </button>
+            </div>
+
+            <div class="col">
+              <button style="cursor:pointer" (click)="goToBoardView()"
+                id="list">
+                <!-- <mat-icon style="horizontal-align: right;">dashboard</mat-icon>Board -->
+                <div class="icon-text">
+                  <mat-icon>dashboard</mat-icon>
+                  <span>Board</span>
+               </div>
+              </button>
+            </div>
+          </div>
+        </div>
+
+      </ul>
+    </div>
+  </div>
+</nav>
+
+
+<div *ngIf="condition;then list else board"></div>
+<ng-template #list>
+  <div style="margin-left: 3%;margin-top: 2%;">
+
+    <div class="card-header">
+      <h1 style="margin-left: 20px;">
+        <mat-icon>assignment</mat-icon>List
+        <button mat-button (click)="openDialog()" id="glow-on-hover"
+          style="float: right; width:10rem; margin-right: 10px;">
+          <mat-icon color="accent">add</mat-icon>New Task
+        </button>
+      </h1>
+    </div>
+
+    <div *ngIf="currentSpace.taskList.length>0 ;then showTasks else noTasks"></div>
+    <ng-template #showTasks>
+      <div class="card" style="width:60rem">
+      <table mat-table [dataSource]="currentSpace.taskList" class="mat-elevation-z8"
+          style=" background:whitesmoke;  ">
+
+      <ng-container matColumnDef="taskName">
+            <th mat-header-cell *matHeaderCellDef> Taskname </th>
+            <td mat-cell *matCellDef="let element">{{element.taskName}} </td>
+          </ng-container>
+
+          <ng-container matColumnDef="email">
+            <th mat-header-cell *matHeaderCellDef> Email </th>
+            <td mat-cell *matCellDef="let element"> {{element.email}}</td>
+          </ng-container>
+
+          <ng-container matColumnDef="taskDescription">
+            <th mat-header-cell *matHeaderCellDef> Description </th>
+            <td mat-cell *matCellDef="let element"> {{element.taskDescription}} </td>
+          </ng-container>
+
+
+          <ng-container matColumnDef="startDate">
+            <th mat-header-cell *matHeaderCellDef> Start Date </th>
+            <td mat-cell *matCellDef="let element">{{element.startDate | date: 'dd/MM/yyyy'}} </td>
+          </ng-container>
+
+          <ng-container matColumnDef="dueDate">
+            <th mat-header-cell *matHeaderCellDef> Due Date </th>
+            <td mat-cell *matCellDef="let element">{{element.dueDate | date: 'dd/MM/yyyy'}} </td>
+          </ng-container>
+          &nbsp;&nbsp;
+          <ng-container matColumnDef="edits">
+            <th mat-header-cell *matHeaderCellDef style="text-align: right;"> Make changes </th>
+            <td mat-cell *matCellDef="let element">
+              <span style="float: right;">
+                <mat-icon matTooltip="remove" mat-mini-fab color="warn" (click)="deleteTask(element)">delete</mat-icon>
+                <mat-icon matTooltip="priority" [matMenuTriggerFor]="matmenu" mat-fab color="primary">loyalty</mat-icon>
+                <mat-icon matTooltip="due date" mat-mini-fab color="warn" (click)="picker.open()">
+                  <span class="material-icons">date_range</span>
+                </mat-icon>
+
+                <mat-form-field style="width:1px;visibility:hidden;">
+                  <input matInput [matDatepicker]="picker" [min]="tdate" (dateInput)=" updateDueDate(element, $event)">
+                  <mat-datepicker #picker></mat-datepicker>
+                </mat-form-field>
+              </span>
+              <mat-menu #matmenu="matMenu">
+                <button mat-menu-item *ngFor="let item of priority" [disabled]="item.value == element.priority"
+                  (click)="updatePriority(element, item.value)">
+                  <span>{{item.viewValue}}</span>
+                </button>
+              </mat-menu>
+            </td>
+          </ng-container>
+
+         <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+        </table>
+
+      </div>
+    </ng-template>
+
+    <ng-template #noTasks>
+    <div style="align-items: center;">
+
+      <mat-card style="align-items: center;
+        max-width: fit-content;">
+        <mat-card-title>
+          <h2>Sorry No tasks assigned</h2>
+      </mat-card-title>
+
+      <mat-card-content>
+
+        <!-- <img
+        src="https://img.freepik.com/free-vector/business-man-dealing-multi-task-new-idea-working-laptop-concept-business-goals-success-satisfying-achievement_1150-39765.jpg?w=2000"
+        alt="login icon" class="img-fluid"  style="height:25rem ; background-size: cover;" /> -->
+      </mat-card-content></mat-card>
+      </div>
+    </ng-template>
+  </div>
+
+</ng-template>
+
+
+<ng-template #board>
+  <mat-card class="example-container"  id="dragone">
+    <mat-card-title>To Do</mat-card-title>
+    <mat-card-subtitle><button (click)="openDialog()" id="glow-on-hover">+New Task</button></mat-card-subtitle>
+
+
+    <div
+      cdkDropList
+      #todoList="cdkDropList"
+      id="toDoId"
+      [cdkDropListData]="td"
+      [cdkDropListConnectedTo]="[doneList,ipList]"
+      class="example-list"
+      (cdkDropListDropped)="drop($event)">
+      <div class="example-box"  *ngFor="let item of td" cdkDrag>
+        <mat-card>
+          <mat-card-title>{{item.taskName}}</mat-card-title>
+          <mat-card-subtitle>Assigned to: {{item.email}} </mat-card-subtitle>
+        </mat-card>
+      </div>
+    </div>
+  </mat-card>
+
+  <mat-card class="example-container"  id="dragtwo">
+    <mat-card-title>In Process</mat-card-title>
+    <mat-card-subtitle><button (click)="openDialog()" id="glow-on-hover">+New Task</button></mat-card-subtitle>
+   <div
+      cdkDropList
+      #ipList="cdkDropList"
+      id="ipId"
+      [cdkDropListData]="ip"
+      [cdkDropListConnectedTo]="[todoList,doneList]"
+      class="example-list"
+      (cdkDropListDropped)="drop($event)">
+      <div class="example-box" *ngFor="let item of ip" cdkDrag>
+        <mat-card>
+          <mat-card-title>{{item.taskName}}</mat-card-title>
+          <mat-card-subtitle>Assigned to: {{item.email}} </mat-card-subtitle>
+        </mat-card>
+      </div>
+    </div>
+  </mat-card>
+
+  <mat-card class="example-container"  id="dragthree">
+    <mat-card-title>Completed</mat-card-title>
+      <mat-card-subtitle><button (click)="openDialog()" id="glow-on-hover">+New Task</button></mat-card-subtitle>
+
+    <div
+      cdkDropList
+      #doneList="cdkDropList"
+      id="dId"
+      [cdkDropListData]="d"
+      [cdkDropListConnectedTo]="[todoList,ipList]"
+      class="example-list"
+      (cdkDropListDropped)="drop($event)">
+      <div class="example-box" *ngFor="let item of d" cdkDrag>
+        <mat-card>
+          <mat-card-title>{{item.taskName}}</mat-card-title>
+          <mat-card-subtitle>Assigned to: {{item.email}} </mat-card-subtitle>
+        </mat-card>
+      </div>
+    </div>
+  </mat-card>
+
+
+
+   <!-- <div cdkDropListGroup class="drag1">
+    <mat-card class="example-card" id="dragone">
+      <mat-card-title>To Be Done</mat-card-title>
+      <mat-card-subtitle><button (click)="openDialog()" id="glow-on-hover">+New Task</button></mat-card-subtitle>
+      <mat-card-content>
+        <div cdkDropList [cdkDropListData]="td" class="example-list" (cdkDropListDropped)="drop($event)">
+          <div class="example-box" *ngFor="let item of td" cdkDrag>
+            <mat-card>
+              <mat-card-title>{{item.taskName}}</mat-card-title>
+              <mat-card-subtitle>Assigned to: {{item.email}} </mat-card-subtitle>
+            </mat-card>
+          </div>
+        </div>
+      </mat-card-content>
+    </mat-card>
+
+    <mat-card class="example-card" id="dragtwo">
+      <mat-card-title>In Process</mat-card-title>
+      <mat-card-subtitle><button (click)="openDialog()" id="glow-on-hover">+New Task</button></mat-card-subtitle>
+      <mat-card-content>
+
+        <div cdkDropList [cdkDropListData]="ip" class="example-list" (cdkDropListDropped)="drop($event)">
+          <div class="example-box" *ngFor="let item of ip" cdkDrag>
+            <mat-card>
+              <mat-card-title>{{item.taskName}}</mat-card-title>
+              <mat-card-subtitle>Assigned to: {{item.email}} </mat-card-subtitle>
+            </mat-card>
+          </div>
+        </div>
+
+      </mat-card-content>
+    </mat-card>
+
+    <mat-card class="example-card" id="dragthree">
+      <mat-card-title>Done</mat-card-title>
+      <mat-card-subtitle><button (click)="openDialog()" id="glow-on-hover">+New Task</button></mat-card-subtitle>
+      <mat-card-content>
+        <div cdkDropList [cdkDropListData]="d" class="example-list" (cdkDropListDropped)="drop($event)">
+          <div class="example-box" *ngFor="let item of d" cdkDrag>
+            <mat-card>
+              <mat-card-title>{{item.taskName}}</mat-card-title>
+              <mat-card-subtitle>Assigned to: {{item.email}} </mat-card-subtitle>
+            </mat-card>
+          </div>
+        </div>
+      </mat-card-content>
+    </mat-card>
+   </div>  -->
+</ng-template>
+
+
+
+
+
+
+
+
+
+
+
+<!-- <div style="width:70%; background-color: green;">
+  <table class="table mt-5">
+    <thead>
+      <tr>
+          <th scope="col">Taskname</th>
+          <th scope="col">Email</th>
+          <th scope="col">Description</th>
+          <th scope="col">Start Date</th>
+          <th scope="col">Due Date</th>
+          <th>Make changes</th>
+      </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let task of currentSpace.taskList">
+       <td>{{task.taskName}}</td>
+       <td>{{task.email}}</td>
+       <td>{{task.taskDescription}}</td>
+       <td>{{task.startDate | date: 'dd/MM/yyyy'}}</td>
+       <td>{{task.dueDate | date: 'dd/MM/yyyy'}}</td>
+          <td mat-cell *matCellDef="let element">
+            <mat-icon matTooltip="remove" mat-mini-fab color="warn" (click)="deleteTask(task)">delete</mat-icon>
+            <span style="float: right;">
+              <mat-icon matTooltip="remove" mat-mini-fab color="warn" (click)="deleteTask(task)">delete</mat-icon>
+              <mat-icon matTooltip="priority" [matMenuTriggerFor]="matmenu" mat-fab color="primary" >loyalty</mat-icon>
+              <mat-icon matTooltip="due date" mat-mini-fab color="warn" (click)="picker.open()">
+                <span class="material-icons">date_range</span></mat-icon>
+
+              <mat-form-field style="width:1px;visibility:hidden;">
+                <input matInput [matDatepicker]="picker" (dateInput)=" updateDueDate(task, $event)">
+                <mat-datepicker #picker></mat-datepicker>
+              </mat-form-field>
+              </span>
+            <mat-menu #matmenu="matMenu">
+              <button mat-menu-item *ngFor="let item of priority" [disabled]="item.value == task.priority" (click) = "updatePriority(task, item.value)">
+                <span>{{item.viewValue}}</span>
+              </button>
+            </mat-menu>
+          </td>
+        </tr>
+    </tbody>
+  </table>
+</div> -->

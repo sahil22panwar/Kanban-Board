@@ -1,0 +1,45 @@
+mat-form-field{
+    padding: 10px
+}   
+#button {
+    min-width: 30px;
+    min-height: 7px;
+    font-family: 'Nunito', sans-serif;
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 1.3px;
+    font-weight: 700;
+    color: #f6f6f8;
+    background: #1e1f1f;
+  background: linear-gradient(90deg, rgb(210, 218, 216) 0%, rgb(129, 6, 6) 100%);
+    border: none;
+    transition: all 0.3s ease-in-out 0s;
+    cursor: pointer;
+    outline: none;
+    position: relative;
+    padding: 10px;
+    }
+  
+  button::before {
+  
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    opacity: 0;
+    transition: all .3s ease-in-out 0s;
+  } 
+  
+  #button:hover, .button:focus {
+    color: #313133;
+    transform: translateY(-6px);
+  }
+  
+  button:hover::before, button:focus::before {
+    opacity: 1;
+  }
+  
+  
+  
+ 
+  

@@ -1,0 +1,22 @@
+<div class="bg-img">
+
+  <br><br><button class="clear" id="glow-on-hover"  matTooltip="Clear Notification" (click)="deleteNotificationByEmail()">Clear</button>
+
+  <div *ngFor="let row of notificationList" style="margin-top: 1%;color: rgb(223, 25, 25);margin-left: 90px;">
+   <div style="color: black;">
+    <mat-card class="example-card">
+      <div style="margin-left: 38px;color: black;">{{row.spaceName}} &nbsp;> &nbsp;{{row.taskName}}<span style="margin-top: 0%; margin-left: 90%;margin-bottom: 0%;">
+        <a mat-raised-button matTooltip="Delete" (click)="deleteNotificationById(row.notificationId)" style="color: red;"><mat-icon>delete</mat-icon></a></span></div>
+
+      <mat-card-header>
+          <mat-icon style="float: left;margin-left: -5px;margin-top: 1.5%;color: black;">person</mat-icon>
+          <span  style="margin-top: 10px;font-size: 14px;margin-left: 10px;color: black;"><h2 style="text-transform: capitalize;color: black;">{{row.createrName}} &nbsp;&nbsp;
+            <span style="border-radius: 50px;background-color: rgb(109, 122, 196);color: black;">{{row.assignedTo}}</span>
+            <span style="margin-left: 38px;color: black;" [matTooltip]="row.email">{{row.assinedName}}</span></h2></span>
+            <!-- <a mat-raised-button matTooltip="Delete" style="color: red;margin-top: 15px;margin-left: 40%;" (click)="deleteNotification()"><mat-icon>delete</mat-icon></a> -->
+      </mat-card-header>
+    </mat-card>
+   </div>
+  </div>
+
+  </div>

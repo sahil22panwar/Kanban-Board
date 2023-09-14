@@ -1,0 +1,88 @@
+
+        <div class="card " style="border-radius: 2%; background: linear-gradient(45deg, #ffffff,#99dffab8);">
+          <div class="card-body" id="register">
+            <div class="row justify-content-center">
+              <div >
+
+                <p class="text-center h1 fw-bold mb-5 mx-1 mx-md-4 mt-3">Sign up</p>
+
+                <form  [formGroup]="registerForm">
+                  <div class="d-flex flex-row align-items-center mb-2">
+                    <i class="fas fa-lock fa-lg me-3 fa-fw"></i>
+
+                    <div class="form-outline flex-fill">
+                      <input type="text" id="form3Example1c" placeholder="Fullname" formControlName="name" name="name"
+                        class="form-control" /> <br>
+
+                    </div>
+                    </div>
+
+                    <!-- <small class="text-danger" *ngIf="registerForm.controls['name'].dirty &&
+                      registerForm.hasError('required','name')" style="color: red;margin-top: 0%;">*Name is required</small> -->
+
+                    <small class="text-danger" *ngIf="!registerForm.controls['name'].valid &&
+                    registerForm.controls['name']?.touched" style="color: red;">*Name is required</small>
+
+
+
+                  <div class="mb-1">
+                    <p style="margin-left: 20px;">Select gender : &nbsp;&nbsp;
+                      <input type="radio" formControlName="gender" name="gender" value="male" checked
+                        style="width: 5%;">Male &nbsp;&nbsp;
+                      <input type="radio" formControlName="gender" name="gender" value="female" checked
+                        style="width: 5%;">Female &nbsp;&nbsp;
+                      <input type="radio" formControlName="gender" name="gender" value="other" checked
+                        style="width: 5%;">Other
+                    </p>
+                  </div>
+
+                  <div class="d-flex flex-row align-items-center mb-2">
+                    <i class="fas fa-lock fa-lg me-3 fa-fw"></i>
+                    <div class="form-outline flex-fill mb-0">
+                      <input type="email" id="form3Example3c" formControlName="email" placeholder="Email address"
+                        name="email" class="form-control"
+                        pattern="[a-z0-9._%+-]+@gmail.com" />
+
+                    </div>
+                    <small class="text-danger" *ngIf="!registerForm.controls['email'].valid &&
+                    registerForm.controls['email']?.touched" style="color: red;">*Email is required</small>
+                  </div>
+
+
+                  <div class="d-flex flex-row align-items-center ">
+                    <i class="fas fa-lock fa-lg me-3 fa-fw"></i>
+                    <div class="form-outline flex-fill mb-0">
+                      <input type="password" id="form3Example4c" formControlName="password" placeholder="Password"
+                        name="password" class="form-control" />
+                      <label class="form-label" for="form3Example4c"></label>
+                    </div>
+                    <small class="text-danger" *ngIf="!registerForm.controls['password'].valid &&
+                    registerForm.controls['password']?.touched" style="color: red;">*password is required</small>
+                  </div>
+
+                  <div class="d-flex flex-row align-items-center mb-2" style="margin-bottom: 0;">
+                    <i class="fas fa-lock fa-lg me-3 fa-fw"></i>
+                    <div class="form-outline flex-fill mb-0">
+                      <input type="password" id="form3Example4c" formControlName="repeatPassword"
+                        placeholder="Confirm password" name="repeatPassword" class="form-control" />
+                      <label class="form-label" for="form3Example4c"></label>
+                    </div>
+                  </div>
+
+                  <div class="form-check d-flex justify-content-center mb-2">
+                    <p class="mb-1 pb-lg-2" style="color: #393f81;" id="button2"> Already have an account? <a (click)="closeSignUpPopUp()" routerLink="/login"
+                        style="color: #393f81; ">Login here</a></p>
+                  </div>
+
+                  <div class="d-flex justify-content-center mx-2 mb-3 mb-lg-4">
+                    <button type="button" class="btn btn-primary btn-lg" id="button" style="background-color: rgb(123, 248, 248);color: black;"(click)="register()" [disabled]="!registerForm.valid">Register</button>
+                  </div>
+
+                </form>
+
+
+              </div>
+
+            </div>
+          </div>
+        </div>
